@@ -3,11 +3,17 @@
   "version": "1.0.0",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.mjs",
-  "types": "./dist/types/index.d.ts",
+  "types": "./dist/cjs/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.mjs"
+      "import": {
+        "types": "./dist/esm/index.d.mts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
     }
   },
   "files": [
@@ -18,7 +24,7 @@
     "build:esm": "tsc -p tsconfig.esm.json && npm run rename:esm",
     "build": "npm run build:cjs && npm run build:esm",
     "clean": "rimraf dist",
-    "rename:esm": "/bin/zsh ./scripts/fix-mjs.sh",
+    "rename:esm": "./scripts/fix-mjs.sh",
     "prepack": "npm run clean && npm run build"
   },
   "keywords": [],
@@ -26,7 +32,7 @@
   "license": "MIT",
   "description": "",
   "devDependencies": {
-    "rimraf": "^5.0.7",
-    "typescript": "^5.5.2"
+    "rimraf": "^6.0.1",
+    "typescript": "^5.7.2"
   }
 }
